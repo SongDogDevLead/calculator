@@ -10,10 +10,10 @@
 // operation and return the result.
 
 //set up auto sizing for display
-body.addEventListener(load, autoSize());
+window.addEventListener('load', autoSize);
 function autoSize(){
 const useVH = window.innerHeight < window.innerWidth;
-let dim = 48 + (useVH ? 'vh' : 'vw');
+let dim = '48' + (useVH ? 'vh' : 'vw');
 const calcBody = document.querySelector('.calcBody');
     calcBody.style.height = dim;
     calcBody.style.width = dim;
@@ -56,10 +56,10 @@ const posNegButton = document.querySelector('#pos-neg');
 posNegButton.addEventListener('click', invertPolarity);
 
 const percentButton = document.querySelector('#percent');
-posNegButton.addEventListener('click', convertToPercent);
+percentButton.addEventListener('click', convertToPercent);
 
 const decimalButton = document.querySelector('#decimal');
-equalsButton.addEventListener('click', addDecimal);
+decimalButton.addEventListener('click', addDecimal);
 
 const equalsButton = document.querySelector('#equals');
 equalsButton.addEventListener('click', solveProcess);
@@ -67,8 +67,12 @@ equalsButton.addEventListener('click', solveProcess);
 //set number button to update display text and 
 //modify currentProcess to prepare for operations
 function valueEnter(){
-    let number = button.textContent;
-    if(processVariables.firstNumber === 0 && processVariables.operator === 'null'){
+    let number = this.textContent;
+    if(processVariables.firstNumber === '0' && processVariables.operator === 'null'){
+        display.textContent = number;
+        processVariables.firstNumber = number;
+    }
+    else if(processVariables.firstNumber === `${result}` && processVariables.operator === 'null'){
         display.textContent = number;
         processVariables.firstNumber = number;
     }
@@ -76,7 +80,7 @@ function valueEnter(){
         display.textContent += number;
         processVariables.firstNumber += number;
     }
-    else if(processVariables.lastNumber === 0){
+    else if(processVariables.lastNumber === '0'){
         display.textContent = number;
         processVariables.lastNumber = number;
     }
@@ -88,9 +92,9 @@ function valueEnter(){
 
 //set operator button to do the same as numbers esentially
 function addOperator(){
-    let operator = button.textContent;
+    let operator = this.textContent;
     processVariables.operator = operator;
-    display.textContent = operator;
+    display.textContent = `${processVariables.firstNumber} ${processVariables.operator}`;
 };
 
 //set clear to reset environment
@@ -105,9 +109,9 @@ function clearProcess(){
 
 //set -/+ to invert the value's positivity
 function invertPolarity(){
-   tempFirstNumber = parseFloat(processVariables.firstNumber)
-   tempLastNumber = parseFloat(processVariables.LastNumber)
-    if(tempFirst != 0 && processVariables.operator === 'null'){
+   let tempFirstNumber = parseFloat(processVariables.firstNumber)
+   let tempLastNumber = parseFloat(processVariables.lastNumber)
+    if(tempFirstNumber != 0 && processVariables.operator === 'null'){
        tempFirstNumber = -tempFirstNumber;
         processVariables.firstNumber = `${tempFirstNumber}`
         display.textContent = processVariables.firstNumber;
@@ -121,8 +125,8 @@ function invertPolarity(){
 
 //set % to convert to a percentage
 function convertToPercent(){
-    tempFirstNumber = parseFloat(processVariables.firstNumber)
-   tempLastNumber = parseFloat(processVariables.LastNumber)
+    let tempFirstNumber = parseFloat(processVariables.firstNumber)
+    let tempLastNumber = parseFloat(processVariables.lastNumber)
     if(tempFirstNumber != 0 && processVariables.operator === 'null'){
         tempFirstNumber = tempFirstNumber/100;
         processVariables.firstNumber = `${tempFirstNumber}`
@@ -149,11 +153,17 @@ function addDecimal(){
 
 //resolve the process stored in processVariables
 function solveProcess(){
-    tempFirstNumber = parseFloat(processVariables.firstNumber)
-    tempLastNumber = parseFloat(processVariables.LastNumber)
+    let tempFirstNumber = parseFloat(processVariables.firstNumber)
+    let tempLastNumber = parseFloat(processVariables.lastNumber)
     // calculate the results
-    if( tempLastNumber != 0)
+    if( tempLastNumber != 0){
     result = operators[processVariables.operator](tempFirstNumber,  tempLastNumber);
+    }
+    else{result = 'Not Today!'}
     display.textContent = result;
-   // result = undefined;
+    processVariables.firstNumber = `${result}`;
+    processVariables.operator = 'null';
+    processVariables.lastNumber = '0';
 };
+
+module.exports = calculator;
