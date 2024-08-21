@@ -9,12 +9,13 @@
     border: 5px solid darkslategray;
     border-radius: 5px;
     box-sizing: content-box;
+    color:black;
 }
 .display{
     height: 8vh;
     width: 48vw;
     background-color: lightgray;
-    color:black;
+    
     font-size: 6vh;
     border: 4px solid black;
     border-radius: 5px;
@@ -24,12 +25,22 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    height: 40vh;
+    width: 48vw;
+    box-sizing: border-box;
+    background-color: black;
+}
+button{
     height: 8vh;
     width: 12vw;
-    box-sizing: border-box;
-    background-color: ;
+    border-radius: 5px;
 }
-button{}
-.special{}
-.operator{}
-.number{}
+.special{
+    background-color: seagreen;
+}
+.operator{
+    background-color:orchid;
+}
+.number{
+    background-color:palevioletred;
+}
