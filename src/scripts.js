@@ -10,15 +10,14 @@
 // operation and return the result.
 
 //set up auto sizing for display
-body.addEventListener(load, autoSize())
+body.addEventListener(load, autoSize());
 function autoSize(){
-
 const useVH = window.innerHeight < window.innerWidth;
 let dim = 48 + (useVH ? 'vh' : 'vw');
-const calcBody = document.querySelector('.calcBody')
+const calcBody = document.querySelector('.calcBody');
     calcBody.style.height = dim;
     calcBody.style.width = dim;
-}
+};
 
 //declare global variables
 let display = document.querySelector('.display');
@@ -31,99 +30,130 @@ const operators = {
 };
 //create the object to update as inputs occur
 let processVariables = {
-    firstNumber: 0,
+    firstNumber: '0',
     operator: 'null',
-    lastNumber: 0
-}
+    lastNumber: '0'
+};
 // create the output variable
-let result = undefined
+let result = undefined;
 
 
 //set event listener for buttons
-const numberButton = document.querySelectorAll('.number')
+const numberButton = document.querySelectorAll('.number');
 numberButton.forEach(button => {
-button.addEventListener('click', valueEnter)
-})
+button.addEventListener('click', valueEnter);
+});
 
-const operatorButton = document.querySelectorAll('.operator')
+const operatorButton = document.querySelectorAll('.operator');
 operatorButton.forEach(button => {
-button.addEventListener('click', addOperator)
-})
+button.addEventListener('click', addOperator);
+});
 
-const clearButton = document.querySelector('#clear')
-clearButton.addEventListener('click', clearProcess)
+const clearButton = document.querySelector('#clear');
+clearButton.addEventListener('click', clearProcess);
 
-const posNegButton = document.querySelector('#pos-neg')
-posNegButton.addEventListener('click', invertPolarity)
+const posNegButton = document.querySelector('#pos-neg');
+posNegButton.addEventListener('click', invertPolarity);
 
-const percentButton = document.querySelector('#percent')
-posNegButton.addEventListener('click', convertToPercent)
+const percentButton = document.querySelector('#percent');
+posNegButton.addEventListener('click', convertToPercent);
 
-const decimalButton
+const decimalButton = document.querySelector('#decimal');
+equalsButton.addEventListener('click', addDecimal);
 
-const equalsButton = document.querySelector('#equals')
-equalsButton.addEventListener('click', solveProcess)
+const equalsButton = document.querySelector('#equals');
+equalsButton.addEventListener('click', solveProcess);
 
 //set number button to update display text and 
 //modify currentProcess to prepare for operations
 function valueEnter(){
-    let number = parseInt(button.textContent)
-    if(processVariables.firstNumber == 0 && processVariables.operator == 'null'){
-        display.textContent = number
-        processVariables.firstNumber = number
+    let number = button.textContent;
+    if(processVariables.firstNumber === 0 && processVariables.operator === 'null'){
+        display.textContent = number;
+        processVariables.firstNumber = number;
     }
-    else if(processVariables.operator == 'null'){
-        display.textContent += number
-        processVariables.firstNumber += number
+    else if(processVariables.operator === 'null'){
+        display.textContent += number;
+        processVariables.firstNumber += number;
     }
-    else if(processVariables.lastNumber == 0){
-        display.textContent = number
-        processVariables.lastNumber = number
+    else if(processVariables.lastNumber === 0){
+        display.textContent = number;
+        processVariables.lastNumber = number;
     }
     else {
-        display.textContent += number
-        processVariables.lastNumber += number
+        display.textContent += number;
+        processVariables.lastNumber += number;
     }
-}
+};
+
+//set operator button to do the same as numbers esentially
 function addOperator(){
-    let operator = button.textContent
-    processVariables.operator = operator
-}
+    let operator = button.textContent;
+    processVariables.operator = operator;
+    display.textContent = operator;
+};
 
+//set clear to reset environment
 function clearProcess(){
-    display.textContent = 0
+    display.textContent = '0';
     processVariables = {
-        firstNumber: 0,
+        firstNumber: '0',
         operator: 'null',
-        lastNumber: 0
+        lastNumber: '0'
     }
-}
+};
 
+//set -/+ to invert the value's positivity
 function invertPolarity(){
-    if(processVariable.firstNumber != 0 && processVariable.operator == 'null'){
-        processVariable.firstNumber = -processVariable.firstNumber
-        display.textContent = processVariable.firstNumber
+   tempFirstNumber = parseFloat(processVariables.firstNumber)
+   tempLastNumber = parseFloat(processVariables.LastNumber)
+    if(tempFirst != 0 && processVariables.operator === 'null'){
+       tempFirstNumber = -tempFirstNumber;
+        processVariables.firstNumber = `${tempFirstNumber}`
+        display.textContent = processVariables.firstNumber;
     }
-    else if(processVariable.lastNumber != 0){
-        processVariable.lastNumber = -processVariable.lastNumber
-        display.textContent = processVariable.lastNumber
+    else if(tempLastNumber != 0){
+       tempLastNumber =-tempLastNumber;
+        processVariables.lastNumber = `${tempLastNumber}`
+        display.textContent = processVariables.lastNumber;
     }
-}
+};
 
+//set % to convert to a percentage
 function convertToPercent(){
-    if(processVariable.firstNumber != 0 && processVariable.operator == 'null'){
-        processVariable.firstNumber = processVariable.firstNumber/100
-        display.textContent = processVariable.firstNumber
+    tempFirstNumber = parseFloat(processVariables.firstNumber)
+   tempLastNumber = parseFloat(processVariables.LastNumber)
+    if(tempFirstNumber != 0 && processVariables.operator === 'null'){
+        tempFirstNumber = tempFirstNumber/100;
+        processVariables.firstNumber = `${tempFirstNumber}`
+        display.textContent = processVariables.firstNumber;
     }
-    else if(processVariable.lastNumber != 0){
-        processVariable.lastNumber = processVariable.lastNumber/100
-        display.textContent = processVariable.lastNumber
+    else if(tempLastNumber != 0){
+        tempLastNumber = tempLastNumber/100;
+        processVariables.lastNumber = `${tempLastNumber}`;
+        display.textContent = processVariables.lastNumber;
     }
-}
+};
 
+//set . to add a . if there isnt one in the current number
+function addDecimal(){
+    if(!processVariables.firstNumber.includes('.') && processVariables.operator === 'null'){
+        processVariables.firstNumber += '.'; 
+        display.textContent = processVariables.firstNumber;
+    }
+    else if(!processVariables.lastNumber.includes('.')){
+        processVariables.lastNumber += '.'; 
+        display.textContent = processVariables.lastNumber;
+    }
+};
+
+//resolve the process stored in processVariables
 function solveProcess(){
+    tempFirstNumber = parseFloat(processVariables.firstNumber)
+    tempLastNumber = parseFloat(processVariables.LastNumber)
     // calculate the results
-    result = operators[processVariables.operator](processVariables.firstNumber, processVariables.lastNumber);
-    display.textContent = result
-    result = undefined
-}
+    if( tempLastNumber != 0)
+    result = operators[processVariables.operator](tempFirstNumber,  tempLastNumber);
+    display.textContent = result;
+   // result = undefined;
+};
