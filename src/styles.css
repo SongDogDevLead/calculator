@@ -13,6 +13,7 @@
     color:black;
     background-color:black;
     margin: auto;
+    flex-grow: 1;
 }
 .display{
     height: 8vh;
@@ -23,21 +24,25 @@
     border-radius: 5px;
     box-sizing: border-box;
     text-align: end;
+    flex-grow: 1;
 }
 .controls{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    height: 40vh;
+    height: ;
     width: 24vw;
     box-sizing: border-box;
     background-color: black;
+    flex-grow: 1;
 }
 button{
     height: 8vh;
     width: 6vw;
     border-radius: 5px;
     font-size: 4vh;
+    background-color:palevioletred;
+    flex-grow: 1;
 }
 .special{
     background-color: skyblue;
@@ -45,8 +50,8 @@ button{
 .operator{
     background-color:orchid;
 }
-.number{
-    background-color:palevioletred;
+#equals{
+    background-color:orchid;
 }
 #zero{
     width:12vw;
