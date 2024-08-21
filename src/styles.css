@@ -1,3 +1,4 @@
+
 .calcBody{
     display:flex;
     flex-direction: column;
@@ -10,6 +11,7 @@
     border-radius: 5px;
     box-sizing: content-box;
     color:black;
+    margin: auto;
 }
 .display{
     height: 8vh;
