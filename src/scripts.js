@@ -9,16 +9,6 @@
 // to the operators available using switch-case to build the 
 // operation and return the result.
 
-//set up auto sizing for display
-window.addEventListener('load', autoSize);
-function autoSize(){
-const useVH = window.innerHeight < window.innerWidth;
-let dim = '48' + (useVH ? 'vh' : 'vw');
-const calcBody = document.querySelector('.calcBody');
-    calcBody.style.height = dim;
-    calcBody.style.width = dim;
-};
-
 //declare global variables
 let display = document.querySelector('.display');
 //create operators conversion object
@@ -127,12 +117,12 @@ function invertPolarity(){
 function convertToPercent(){
     let tempFirstNumber = parseFloat(processVariables.firstNumber)
     let tempLastNumber = parseFloat(processVariables.lastNumber)
-    if(tempFirstNumber != 0 && processVariables.operator === 'null'){
+    if(tempFirstNumber != 0 && processVariables.operator === 'null' && !processVariables.firstNumber.includes('.')){
         tempFirstNumber = tempFirstNumber/100;
         processVariables.firstNumber = `${tempFirstNumber}`
         display.textContent = processVariables.firstNumber;
     }
-    else if(tempLastNumber != 0){
+    else if(tempLastNumber != 0 && !processVariables.lastNumber.includes('.')){
         tempLastNumber = tempLastNumber/100;
         processVariables.lastNumber = `${tempLastNumber}`;
         display.textContent = processVariables.lastNumber;
