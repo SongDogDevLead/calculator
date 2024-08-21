@@ -8,7 +8,7 @@
 // then we can build an operation taking arr[1] comparing it 
 // to the operators available using switch-case to build the 
 // operation and return the result.
-addEventListener(load, autoSize())
+body.addEventListener(load, autoSize())
 function autoSize(){
 
 const useVH = window.innerHeight < window.innerWidth;
@@ -16,4 +16,16 @@ let dim = 48 + (useVH ? 'vh' : 'vw');
 const calcBody = document.querySelector('.calcBody')
     calcBody.style.height = dim;
     calcBody.style.width = dim;
+}
+const display = document.querySelector('.display');
+
+
+const valueButton = document.querySelectorAll('.value')
+valueButton.forEach(button => {
+button.addEventListener(click, valueEnter())
+})
+    
+function valueEnter(){
+    let value = button.text
+    display.text += value
 }
