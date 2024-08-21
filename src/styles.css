@@ -11,6 +11,7 @@
     border-radius: 5px;
     box-sizing: content-box;
     color:black;
+    background-color:black;
     margin: auto;
 }
 .display{
@@ -31,19 +32,22 @@
     width: 24vw;
     box-sizing: border-box;
     background-color: black;
-    font-size: -2rem;
 }
 button{
     height: 8vh;
     width: 6vw;
     border-radius: 5px;
+    font-size: 4vh;
 }
 .special{
-    background-color: seagreen;
+    background-color: skyblue;
 }
 .operator{
     background-color:orchid;
 }
 .number{
     background-color:palevioletred;
+}
+#zero{
+    width:12vw;
 }
