@@ -120,7 +120,7 @@ function invertPolarity(){
 function convertToPercent(){
     let tempFirstNumber = parseFloat(processVariables.firstNumber)
     let tempLastNumber = parseFloat(processVariables.lastNumber)
-    if(tempFirstNumber != 0 && processVariables.operator === 'null' && !processVariables.firstNumber.includes('.')){
+    if(tempFirstNumber != 0 && processVariables.operator === 'null'){
         tempFirstNumber = tempFirstNumber/100;
         processVariables.firstNumber = `${tempFirstNumber}`
         display.textContent = processVariables.firstNumber;
@@ -167,7 +167,7 @@ function solveProcess(){
     if( tempLastNumber != 0){
     result = operators[processVariables.operator](tempFirstNumber,  tempLastNumber);
     }
-    else{result = 'Not Today!'}
+    else{result = 'Nope!'}
     console.log(`result after solve: ${result}`)
     display.textContent = result;
     processVariables.firstNumber = `${result}`;
