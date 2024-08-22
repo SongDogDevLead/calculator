@@ -12,12 +12,7 @@
 //declare global variables
 let display = document.querySelector('.display');
 //create operators conversion object
-const operators = {
-    '+': (a, b) => a + b,
-    '-': (a, b) => a - b,
-    '*': (a, b) => a * b,
-    '/': (a, b) => a / b
-};
+
 //create the object to update as inputs occur
 let processVariables = {
     firstNumber: '0',
@@ -58,6 +53,11 @@ equalsButton.addEventListener('click', solveProcess);
 //modify currentProcess to prepare for operations
 function valueEnter(){
     let number = this.textContent;
+    console.log(`Button clicked: ${number}`);
+    console.log(`Before: firstNumber = ${processVariables.firstNumber}, 
+        lastNumber = ${processVariables.lastNumber}, display = ${display.textContent},
+       operator =  ${processVariables.operator} `);
+
     if(processVariables.firstNumber === '0' && processVariables.operator === 'null'){
         display.textContent = number;
         processVariables.firstNumber = number;
@@ -78,6 +78,9 @@ function valueEnter(){
         display.textContent += number;
         processVariables.lastNumber += number;
     }
+    console.log(`After: firstNumber = ${processVariables.firstNumber}, 
+        lastNumber = ${processVariables.lastNumber}, display = ${display.textContent}
+        operator =  ${processVariables.operator}`);
 };
 
 //set operator button to do the same as numbers esentially
@@ -131,29 +134,44 @@ function convertToPercent(){
 
 //set . to add a . if there isnt one in the current number
 function addDecimal(){
-    if(!processVariables.firstNumber.includes('.') && processVariables.operator === 'null'){
+    console.log(`Before decimal: firstNumber = ${processVariables.firstNumber}, lastNumber = ${processVariables.lastNumber}`);
+    if(processVariables.firstNumber === `${result}` && processVariables.operator === 'null'){
+        processVariables.firstNumber = '0.'
+        display.textContent = processVariables.firstNumber
+    } 
+    else if(!processVariables.firstNumber.includes('.') && processVariables.operator === 'null'){
         processVariables.firstNumber += '.'; 
         display.textContent = processVariables.firstNumber;
     }
-    else if(!processVariables.lastNumber.includes('.')){
+    else if(!processVariables.lastNumber.includes('.') && processVariables.operator != 'null'){
         processVariables.lastNumber += '.'; 
         display.textContent = processVariables.lastNumber;
     }
+    console.log(`After decimal: firstNumber = ${processVariables.firstNumber}, lastNumber = ${processVariables.lastNumber}`);
 };
-
+ console.log(`parse test: parseFloat(processVariables.firstNumber) = ${parseFloat(processVariables.firstNumber)}`)
 //resolve the process stored in processVariables
+
 function solveProcess(){
-    let tempFirstNumber = parseFloat(processVariables.firstNumber)
-    let tempLastNumber = parseFloat(processVariables.lastNumber)
+    const operators = {
+        '+': (a, b) => a + b,
+        '-': (a, b) => a - b,
+        '*': (a, b) => a * b,
+        '/': (a, b) => a / b
+    };
+    let tempFirstNumber = parseFloat(processVariables.firstNumber);
+    let tempLastNumber = parseFloat(processVariables.lastNumber);
+   
+    console.log(`Before solve: tempFirstNumber = ${tempFirstNumber}, lastNumber = ${tempLastNumber}`)
     // calculate the results
     if( tempLastNumber != 0){
     result = operators[processVariables.operator](tempFirstNumber,  tempLastNumber);
     }
     else{result = 'Not Today!'}
+    console.log(`result after solve: ${result}`)
     display.textContent = result;
     processVariables.firstNumber = `${result}`;
     processVariables.operator = 'null';
     processVariables.lastNumber = '0';
 };
 
-module.exports = calculator;
