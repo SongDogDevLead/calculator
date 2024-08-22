@@ -9,6 +9,11 @@
 // to the operators available using switch-case to build the 
 // operation and return the result.
 
+// Welp none of that panned out, I think this is better but 
+// I want to leave the original thoughts here for posterity.
+// I just kept realizing certain ideas would work better as
+// I went.
+
 //declare global variables
 let display = document.querySelector('.display');
 //create operators conversion object
